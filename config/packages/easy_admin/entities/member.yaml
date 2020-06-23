@@ -1,0 +1,26 @@
+easy_admin:
+    entities:
+        Member:
+            class: App\Entity\Member
+            label: 'Membres'
+            list:
+                fields:
+                    - { property: username, label: Identifiant }
+                    - { property: email, label: Email, type: 'email' }
+                    - { property: gender, label: Civilité }
+                    - { property: firstname, label: Prénom }
+#                    - { property: active, label: Actif, type: toggle }
+            form:
+                fields:
+                    - { property: username, label: Identifiant }
+                    - { property: plainPassword, label: Mot de passe, type: 'text' }
+                    - { property: email, label: Email }
+                    - { property: gender, label: Civilité }
+                    - { property: firstname, label: Prénom }
+            show:
+                fields:
+                    - { property: username, label: Identifiant }
+                    - { property: email, label: Email }
+                    - { property: gender, label: Civilité }
+                    - { property: firstname, label: Prénom }
+                    - {property: outings, label: 'Sorties'}

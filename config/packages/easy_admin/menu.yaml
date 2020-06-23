@@ -1,0 +1,13 @@
+easy_admin:
+    design:
+        menu:
+            - { entity: 'Member', label: 'Membres', icon: 'user' }
+            - { entity: 'Outing', label: 'Sorties', icon: 'tree' }
+            - { entity: 'ExternalOuting', label: 'Sorties (externes)', icon: 'tree' }
+            - { entity: 'ExternalSource', label: 'Sources externes', icon: 'layer-group' }
+#            -
+#                label: GROUP_NAME
+#                icon: 'GROUP_ICON'
+#                children:
+#                    - ...
+#            - { label: 'SEPARATOR' }

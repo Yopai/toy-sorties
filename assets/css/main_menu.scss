@@ -1,0 +1,105 @@
+/*
+ * Make this absolute positioned
+ * at the top left of the screen
+ */
+$menu-top: 1em;
+$menu-left: 1em;
+$menu-margin: 2em;
+#main-menu {
+  z-index: 10;
+  position: relative;
+}
+
+#menuToggle {
+  position: fixed;
+  top: $menu-top;
+  left: $menu-left;
+
+  -webkit-user-select: none;
+  user-select: none;
+
+  input {
+    display: none;
+  }
+
+  label {
+    cursor: pointer;
+  }
+
+  input:checked ~ .main-menu-container {
+    transform: none;
+  }
+}
+
+#main-menu:hover .main-menu-container {
+  transform: none;
+}
+
+.main-menu-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100%;
+  padding: $menu-top $menu-left $menu-top $menu-left;
+
+
+  background: #f0f0f0;
+  border-right: 1px solid grey;
+  -webkit-font-smoothing: antialiased;
+  /* to stop flickering of text in safari */
+
+  transform-origin: 0 0;
+  transform: translate(-100%, 0);
+
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+
+  .menu {
+    list-style-type: none;
+    overflow: auto;
+    height: 100%;
+    padding: 0;
+  }
+
+  .menu-item {
+    padding: 10px 0;
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  label {
+    float: right;
+    margin-top: -2em;
+  }
+}
+
+.outings-list {
+  height: 3000px;
+}
+
+@media(max-width: 800px) {
+  html {
+    font-size: 0.8em;
+  }
+}
+
+@media (orientation: landscape) {
+  #main-container {
+    margin-left: ($menu-left + $menu-margin);
+    width: auto;
+  }
+}
+
+@media (orientation: portrait) {
+  $nav-height: (2em + 2* $menu-top);
+  #main-menu {
+    position: fixed;
+    width: 100%;
+    height: $nav-height;
+    background: lightgray;
+    overflow: visible;
+  }
+  #main-container {
+    padding-top: ($nav-height + 1em);
+  }
+}

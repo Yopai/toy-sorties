@@ -1,0 +1,18 @@
+easy_admin:
+    site_name: 'Vers les sorties et au-delà !'
+    formats:
+        date:     'd/m/Y'
+        time:     'H:i'
+        datetime: 'd/m/Y H:i'
+    list:
+        max_results: 20
+
+    design:
+        brand_color: '#00b4d8'
+        assets:
+            css: [ 'assets/admin.css' ]
+        form_theme:
+            - '@EasyAdmin/form/bootstrap_4.html.twig'
+            - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+imports:
+  - { resource: easy_admin/ }

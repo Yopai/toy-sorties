@@ -1,0 +1,19 @@
+body {
+    background-color: lightgray;
+}
+
+.outings-list .outing .detail,
+.outings-list .outing .detail > .main {
+    flex-grow: 1
+}
+
+.outings-list .outing .detail > .left {
+    width: 5em;
+    text-align: right;
+    padding: 0 1em;
+}
+
+.outings-list .outing time {
+    display: block;
+    font-weight: bold;
+}

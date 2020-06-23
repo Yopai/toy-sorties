@@ -1,0 +1,27 @@
+easy_admin:
+    entities:
+        ExternalSource:
+            class: App\Entity\ExternalSource
+            label: 'Sources externes'
+            list:
+                fields:
+                    - { property: name, label: 'Nom' }
+                    - { property: rootUrl, label: 'URL du site' }
+                    - { property: active, label: 'Active' }
+            form:
+                fields:
+                    - { property: name, label: 'Nom' }
+                    -   property: rootUrl
+                        label: 'URL du site'
+                        type: 'url'
+                        type_options:
+                            required: true
+                            default_protocol: 'https'
+
+                    -   property: serviceClass
+                        type: choice
+                        type_options:
+                            choices:
+                                'On Va Sortir': 'App\Service\OVSOutingService'
+                                'Toutes Mes Sorties': 'App\Service\TMSOutingService'
+                                'Sortir Bouger': 'App\Service\SBOutingService'
