@@ -11,6 +11,6 @@ interface ExternalOutingServiceInterface
 {
     public function __construct(string $rootUrl, HttpBrowser $browser);
     public function login(ExternalLogin $data);
-    public function getOutings(EntityManagerInterface $em, ExternalSource $source);
-    public function getOuting(EntityManagerInterface $em, ExternalOuting $outing);
+    public function retrieveOutings(EntityManagerInterface $em, ExternalSource $source);
+    public function retrieveOuting(EntityManagerInterface $em, ExternalOuting $outing);
 }

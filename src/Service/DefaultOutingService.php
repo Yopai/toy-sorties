@@ -23,9 +23,9 @@ abstract class DefaultOutingService implements ExternalOutingServiceInterface
 
     abstract public function login(ExternalLogin $data);
 
-    abstract public function getOutings(EntityManagerInterface $em, ExternalSource $source);
+    abstract public function retrieveOutings(EntityManagerInterface $em, ExternalSource $source);
 
-    abstract public function getOuting(EntityManagerInterface $em, ExternalOuting $outing);
+    abstract public function retrieveOuting(EntityManagerInterface $em, ExternalOuting $outing);
 
     protected function getAbsoluteUrl($source, $href)
     {

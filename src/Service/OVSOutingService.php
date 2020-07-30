@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Data\ExternalLogin;
+use App\Entity\ExternalMember;
 use App\Entity\ExternalOuting;
 use App\Entity\ExternalSource;
 use DateTime;
@@ -23,7 +24,7 @@ class OVSOutingService extends DefaultOutingService implements ExternalOutingSer
         ]);
     }
 
-    public function getOutings(EntityManagerInterface $em, ExternalSource $source)
+    public function retrieveOutings(EntityManagerInterface $em, ExternalSource $source)
     {
         $this->browser->request('GET', $this->rootUrl . self::VIEW_ALL_ROUTE);
         $crawler = $this->browser->getCrawler();
@@ -62,13 +63,13 @@ class OVSOutingService extends DefaultOutingService implements ExternalOutingSer
                     $date->setTime($time[0], $time[1]);
 
                     $outing->setExternalUrl($this->getAbsoluteUrl($source, $href));
-                    $outing->setStartDate($date->format('Y-m-d'));
-                    $outing->setStartTime($date);
+                    $outing->setStartDate($date);
                     $outing->setTitle($rowdata[2]);
                     [$current, $max] = explode(' / ', $rowdata[3]);
                     $outing->setCurrentRegistrations(intval($current));
                     $outing->setMaxRegistrations(intval($max));
-                    $outing->setAuthor($rowdata[4]);
+                    $outing->setAuthor($em->getRepository(ExternalMember::class)->findOneOrCreateByUsername($rowdata[4]));
+
                     $outings [] = $outing;
                 break;
             }
@@ -86,7 +87,7 @@ class OVSOutingService extends DefaultOutingService implements ExternalOutingSer
         return $outings;
     }
 
-    public function getOuting(EntityManagerInterface $em, ExternalOuting $outing)
+    public function retrieveOuting(EntityManagerInterface $em, ExternalOuting $outing)
     {
     }
 }

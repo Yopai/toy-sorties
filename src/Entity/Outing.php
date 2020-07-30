@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=OutingRepository::class)
+ * @ORM\InheritanceType("JOINED")
  */
 class Outing
 {
@@ -44,6 +45,158 @@ class Outing
      * @ORM\JoinColumn(nullable=false)
      */
     private $author;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity=OutingCategory::class)
+     */
+    private $category;
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     *
+     * @return Outing
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMaxRegistrations()
+    {
+        return $this->maxRegistrations;
+    }
+
+    /**
+     * @param mixed $maxRegistrations
+     *
+     * @return Outing
+     */
+    public function setMaxRegistrations($maxRegistrations)
+    {
+        $this->maxRegistrations = $maxRegistrations;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCurrentRegistrations()
+    {
+        return $this->currentRegistrations;
+    }
+
+    /**
+     * @param mixed $currentRegistrations
+     *
+     * @return Outing
+     */
+    public function setCurrentRegistrations($currentRegistrations)
+    {
+        $this->currentRegistrations = $currentRegistrations;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWaitingRegistrations()
+    {
+        return $this->waitingRegistrations;
+    }
+
+    /**
+     * @param mixed $waitingRegistrations
+     *
+     * @return Outing
+     */
+    public function setWaitingRegistrations($waitingRegistrations)
+    {
+        $this->waitingRegistrations = $waitingRegistrations;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVirt()
+    {
+        return $this->virt;
+    }
+
+    /**
+     * @param mixed $virt
+     *
+     * @return Outing
+     */
+    public function setVirt($virt)
+    {
+        $this->virt = $virt;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDepartment()
+    {
+        return $this->department;
+    }
+
+    /**
+     * @param mixed $department
+     *
+     * @return Outing
+     */
+    public function setDepartment($department)
+    {
+        $this->department = $department;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\Column(type="integer",nullable=true)
+     */
+    private $maxRegistrations;
+
+    /**
+     * @ORM\Column(type="integer",nullable=true)
+     */
+    private $currentRegistrations;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $waitingRegistrations;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $virt;
+
+    /**
+     * @ORM\Column(type="string", length=3, nullable=true)
+     */
+    private $department;
+
 
     public function __construct()
     {
@@ -132,5 +285,9 @@ class Outing
         $this->author = $author;
 
         return $this;
+    }
+
+    public function isFull() {
+        return ($this->currentRegistrations >= $this->maxRegistrations);
     }
 }

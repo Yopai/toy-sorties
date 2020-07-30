@@ -35,9 +35,10 @@ class ApiController extends AbstractController
         $outings = [];
         foreach ($sources as $source) {
             $service = $factory->createService($source);
-            $outings = array_merge($outings, $service->getOutings($em, $source));
+            $outings = array_merge($outings, $service->retrieveOutings($em, $source));
         }
         $em->flush();
+
         usort($outings, function(ExternalOuting $outing1, ExternalOuting $outing2) {
             return $outing1->getStartDate().' '.$outing1->getStartTime()->format('H:i') >
                    $outing2->getStartDate().' '.$outing2->getStartTime()->format('H:i');

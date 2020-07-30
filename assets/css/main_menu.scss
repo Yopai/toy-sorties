@@ -5,6 +5,8 @@
 $menu-top: 1em;
 $menu-left: 1em;
 $menu-margin: 2em;
+$menu-width: 300px;
+
 #main-menu {
   z-index: 10;
   position: relative;
@@ -39,7 +41,7 @@ $menu-margin: 2em;
   position: fixed;
   top: 0;
   left: 0;
-  width: 300px;
+  width: $menu-width;
   height: 100%;
   padding: $menu-top $menu-left $menu-top $menu-left;
 
@@ -89,6 +91,17 @@ $menu-margin: 2em;
     width: auto;
   }
 }
+
+@media (min-width:800px) {
+  #main-container {
+    padding-left: $menu-width;
+  }
+
+  .main-menu-container {
+    transform: none;
+  }
+}
+
 
 @media (orientation: portrait) {
   $nav-height: (2em + 2* $menu-top);

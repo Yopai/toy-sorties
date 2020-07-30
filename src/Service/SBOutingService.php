@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Data\ExternalLogin;
+use App\Entity\ExternalMember;
 use App\Entity\ExternalOuting;
 use App\Entity\ExternalSource;
 use DateTime;
@@ -17,8 +18,6 @@ class SBOutingService extends DefaultOutingService implements ExternalOutingServ
     const VIEW_ALL_ROUTE = 'index.php?sorties=prevues';
     const LOGIN_ROUTE    = 'connexion.php';
 
-    private $logged = false;
-
     public function login(ExternalLogin $data)
     {
         $this->browser->request('GET', $this->rootUrl . self::LOGIN_ROUTE);
@@ -31,7 +30,7 @@ class SBOutingService extends DefaultOutingService implements ExternalOutingServ
         ]);
     }
 
-    public function getOutings(EntityManagerInterface $em, ExternalSource $source)
+    public function retrieveOutings(EntityManagerInterface $em, ExternalSource $source)
     {
         $this->browser->request('GET', $this->rootUrl . self::VIEW_ALL_ROUTE);
         $crawler = $this->browser->getCrawler();
@@ -86,8 +85,7 @@ class SBOutingService extends DefaultOutingService implements ExternalOutingServ
                 $date->setTime($time[0], $time[1]);
                 $outing->setExternalUrl($this->getAbsoluteUrl($source, $href));
 
-                $outing->setStartDate($date->format('Y-m-d'));
-                $outing->setStartTime($date);
+                $outing->setStartDate($date);
                 $outing->setTitle($rowdata[4]);
                 if ($rowdata[3]) {
                     [$current, $max] = explode(' / ', $rowdata[3]);
@@ -95,10 +93,7 @@ class SBOutingService extends DefaultOutingService implements ExternalOutingServ
                     $outing->setMaxRegistrations(intval($max));
                 }
                 if ($this->isLogged()) {
-                    $outing->setAuthor($rowdata[1]);
-                }
-                else {
-                    $outing->setAuthor('');
+                    $outing->setAuthor($em->getRepository(ExternalMember::class)->findOneOrCreateByUsername($rowdata[1]));
                 }
                 $outings [] = $outing;
             }
@@ -115,15 +110,12 @@ class SBOutingService extends DefaultOutingService implements ExternalOutingServ
         return $outings;
     }
 
-    public function getOuting(EntityManagerInterface $em, ExternalOuting $outing)
+    public function retrieveOuting(EntityManagerInterface $em, ExternalOuting $outing)
     {
     }
 
-    /**
-     * @return bool
-     */
-    public function isLogged(): bool
+    private function isLogged()
     {
-        return $this->logged;
+        return false;
     }
 }
